@@ -1,0 +1,14 @@
+<div *ngIf="story$ | async as story">
+  <h2>{{story.title}}</h2>
+  <p>By <a [routerLink]="['/user',story.by]">{{story.by}}</a></p>
+  <a [href]="story.url" target="_blank">Read original</a>
+
+  <div *ngIf="story.kids">
+    <h3>Comments</h3>
+    <ul>
+      <li *ngFor="let kid of story.kids">
+        <app-comment [id]="kid"></app-comment>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<nz-comment *ngIf="comment$ | async as c" [nzAuthor]="c.by" [nzDatetime]="(c.time * 1000 | date:'short') ?? ''">
+  <div [innerHTML]="c.text"></div>
+</nz-comment>
