@@ -1,17 +1,15 @@
-import { Component, inject, NgModule, OnInit } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
-import { loadTopStories } from '../../store/actions/story.actions';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { storyReducer } from '../../store/reducers/story.reducer';
 import { NzListModule } from 'ng-zorro-antd/list'
 import { NzCommentModule } from 'ng-zorro-antd/comment'
+import { Store } from '@ngrx/store';
+import { StoryActions } from '../../store/actions/story.actions';
+
 
 @Component({
   selector: 'app-home',
-  imports: [StoreModule, RouterModule, CommonModule, NzListModule, BrowserModule, NzCommentModule],
-  templateUrl: './home.component.html',
+  imports: [RouterModule, CommonModule, NzListModule, NzCommentModule], templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
@@ -19,6 +17,6 @@ export class HomeComponent implements OnInit {
   storyIds$ = this.store.select(state => state.stories.topStoryIds);
 
   ngOnInit(): void {
-    this.store.dispatch(loadTopStories());
+    this.store.dispatch(StoryActions.loadTopStories());
   }
 }
