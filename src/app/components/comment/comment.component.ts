@@ -1,22 +1,24 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { Observable } from 'rxjs';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
+import { StoryService } from '../../services/story.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
-  imports: [NzCommentModule, DatePipe, CommonModule],
+  imports: [NzCommentModule, DatePipe, CommonModule, SafeHtmlPipe],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css'
 })
-export class CommentComponent implements OnInit{
+export class CommentComponent implements OnInit {
   @Input() id!: number;
-  comment$!: Observable<any>;
+  comment$!: Observable<any> | null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private storyService: StoryService) { }
   ngOnInit(): void {
-    this.comment$ = this.http.get(`https://hacker-news.firebaseio.com/v0/item/${this.id}.json`);
+    this.comment$ = this.storyService.getComment(this.id);
   }
 
 }

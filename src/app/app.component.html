@@ -1,1 +1,11 @@
-<router-outlet />
+<nz-layout>
+  <nz-header>
+    <div class="logo">HackerNews</div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item [routerLink]="['/']">Top Stories</li>
+    </ul>
+  </nz-header>
+  <nz-content style="padding: 24px 50px;">
+    <router-outlet />
+  </nz-content>
+  </nz-layout>
