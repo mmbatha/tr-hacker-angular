@@ -18,10 +18,10 @@ export const StoryActions = createActionGroup({
   events: {
     'Load Top Stories': emptyProps(),
     'Load Top Stories Success': props<{ ids: number[] }>(),
-    'Load Top Stories Failure': props<{ error: Error }>(),
+    'Load Top Stories Failure': props<{ error: any }>(),
     'Load Story': props<{ id: number }>(),
     'Load Story Success': props<{ story: any }>(),
-    'Load Story Failure': props<{ error: Error }>()
+    'Load Story Failure': props<{ error: any }>()
   }
 });
 

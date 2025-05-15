@@ -17,5 +17,15 @@ import { StoryEffects } from './store/effects/story.effects';
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideStore(storyReducer), provideHttpClient(), provideNzI18n(en_GB), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideEffects([StoryEffects]), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideStore({ stories: storyReducer }),
+    provideHttpClient(),
+    provideNzI18n(en_GB),
+    importProvidersFrom(FormsModule),
+    provideAnimationsAsync(),
+    provideEffects([StoryEffects]),
+    provideStoreDevtools()
+  ]
 };

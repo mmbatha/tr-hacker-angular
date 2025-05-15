@@ -1,4 +1,4 @@
-<nz-list *ngIf="storyIds$ | async as ids">
+<nz-list [nzLoading]="loading$ | async" *ngIf="storyIds$ | async as ids">
   <nz-list-item *ngFor="let id of ids.slice(0, 20)">
     <a [routerLink]="['/item', id]">Story #{{ id }}</a>
   </nz-list-item>
