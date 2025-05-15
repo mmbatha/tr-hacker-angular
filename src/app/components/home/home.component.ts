@@ -22,10 +22,7 @@ export class HomeComponent implements OnInit {
   /**
    * Basic ctor.
    */
-  constructor(private store: Store) {
-    console.log('home');
-
-  }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.store.dispatch(StoryActions.loadTopStories());
