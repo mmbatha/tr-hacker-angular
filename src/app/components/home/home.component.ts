@@ -5,7 +5,8 @@ import { NzListModule } from 'ng-zorro-antd/list'
 import { Store } from '@ngrx/store';
 import { StoryActions } from '../../store/actions/story.actions';
 import { Observable } from 'rxjs';
-import { selectLoading, selectStoryIds } from '../../store/selectors/story.selectors';
+import { selectLoading, selectStories } from '../../store/selectors/story.selectors';
+import { Story } from '../../models/story';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { selectLoading, selectStoryIds } from '../../store/selectors/story.selec
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  storyIds$!: Observable<number[]>;
+  stories$!: Observable<Story[]>;
   loading$!: Observable<boolean>;
 
   /**
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(StoryActions.loadTopStories());
-    this.storyIds$ = this.store.select(selectStoryIds);
+    this.stories$ = this.store.select(selectStories);
     this.loading$ = this.store.select(selectLoading);
   }
 }

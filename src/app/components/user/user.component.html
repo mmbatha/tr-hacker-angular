@@ -1,6 +1,9 @@
-<div *ngIf="user$ | async as user">
-  <h2>{{user.id}}</h2>
-  <p>Created: {{user.created * 1000 | date}}</p>
-  <p>Karma: {{user.karma}}</p>
-  <div [innerHTML]="user.about"></div>
-</div>
+<nz-card *ngIf="user$ | async as user" nzTitle="User Profile" [nzBordered]="true">
+  <p><strong>User:</strong> {{ user.id }}</p>
+  <p><strong>Karma:</strong> {{ user.karma }}</p>
+  <p><strong>Created:</strong> {{ user.created * 1000 | date:'medium' }}</p>
+  <div *ngIf="user.about">
+    <strong>About:</strong>
+    <div [innerHTML]="user.about | safeHtml"></div>
+  </div>
+</nz-card>

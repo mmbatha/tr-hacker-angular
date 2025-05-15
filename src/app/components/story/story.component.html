@@ -1,9 +1,16 @@
 <div *ngIf="story$ | async as story">
   <h2>{{story.title}}</h2>
-  <p>By <a [routerLink]="['/user',story.by]">{{story.by}}</a></p>
-  <a [href]="story.url" target="_blank">Read original</a>
+  <p>
+    <strong>by</strong><a [routerLink]="['/user',story.by]">{{story.by}}</a> |
+    <strong>score</strong> {{story.score}} |
+    <strong>comments</strong> {{story.descendants}} |
+    <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
+  </p>
+  <p *ngIf="story.url">
+    <a [href]="story.url" target="_blank">Read original</a>
+  </p>
 
-  <div *ngIf="story.kids">
+  <div *ngIf="story.kids?.length">
     <h3>Comments</h3>
     <ul>
       <li *ngFor="let kid of story.kids">
