@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { StoryActions } from '../actions/story.actions';
+import * as StoryActions from '../actions/story.actions';
 import { Story } from '../../models/story';
 
 export const storeFeatureKey = 'stories';
@@ -44,7 +44,7 @@ export const storyReducer = createReducer(
     ...state,
     stories: {
       ...state.story,
-      [story]: story
+      story: story
     },
     loading: false
   })),

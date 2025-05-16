@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzListModule } from 'ng-zorro-antd/list'
 import { Store } from '@ngrx/store';
-import { StoryActions } from '../../store/actions/story.actions';
+import * as StoryActions from '../../store/actions/story.actions';
 import { Observable } from 'rxjs';
 import { selectLoading, selectStories } from '../../store/selectors/story.selectors';
 import { Story } from '../../models/story';

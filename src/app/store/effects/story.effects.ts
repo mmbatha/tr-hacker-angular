@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { StoryActions } from '../actions/story.actions';
+import * as StoryActions from '../actions/story.actions';
 import { StoryService } from '../../services/story.service';
 
 
