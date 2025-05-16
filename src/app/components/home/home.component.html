@@ -1,0 +1,14 @@
+<h2>Top Stories</h2>
+<nz-list [nzLoading]="loading$ | async" *ngIf="stories$ | async as stories">
+  <nz-list-item *ngFor="let story of stories">
+    <nz-list-item-meta [nzTitle]="nzTitleTpl" [nzDescription]="nzDescTpl">
+    </nz-list-item-meta>
+    <ng-template #nzTitleTpl>
+      <a [routerLink]="['/item', story.id]">{{ story.title }}</a>
+    </ng-template>
+    <ng-template #nzDescTpl>
+      <span>by {{story.by}}</span>
+    </ng-template>
+
+  </nz-list-item>
+</nz-list>
