@@ -11,6 +11,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-story',
+  standalone: true,
   imports: [RouterLink, CommentComponent, CommonModule, NzListModule, NzTableModule, DatePipe],
   templateUrl: './story.component.html',
   styleUrl: './story.component.css'

@@ -1,17 +1,17 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import * as CommentActions from "../actions/comment.actions";
 import { Comment } from '../../models/comment';
 
 export const commentFeatureKey = 'comment';
 
-export interface State {
-  comment: { [id: number]: any };
+export interface CommentState {
+  commentsById: { [id: number]: Comment };
   loading: boolean;
   error: any;
 }
 
-export const initialState: State = {
-  comment: {},
+export const initialState: CommentState = {
+  commentsById: {},
   loading: false,
   error: null
 }
@@ -20,14 +20,13 @@ export const commentReducer = createReducer(
   initialState,
   on(CommentActions.loadComment, state => ({
     ...state,
-    loading: true,
-    error: null
+    loading: true
   })),
-  on(CommentActions.loadCommentSuccess, (state, { comment }) => ({
+  on(CommentActions.loadCommentSuccess, (state, { id, comment }) => ({
     ...state,
-    comments: {
-      ...state.comment,
-      comment: comment
+    commentsById: {
+      ...state.commentsById,
+      [id]: comment
     },
     loading: false
   })),
@@ -37,8 +36,3 @@ export const commentReducer = createReducer(
     error
   }))
 )
-
-export const commentFeature = createFeature({
-  name: commentFeatureKey, reducer:
-  commentReducer,
-});

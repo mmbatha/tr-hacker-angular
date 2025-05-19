@@ -1,4 +1,4 @@
-<nz-card *ngIf="user$ | async as user" nzTitle="User Profile" [nzBordered]="true">
+<nz-card *ngIf="user$ | async as user; else loading" nzTitle="User Profile" [nzBordered]="true">
   <p><strong>User:</strong> {{ user.id }}</p>
   <p><strong>Karma:</strong> {{ user.karma }}</p>
   <p><strong>Created:</strong> {{ user.created * 1000 | date:'medium' }}</p>
@@ -7,3 +7,4 @@
     <div [innerHTML]="user.about | safeHtml"></div>
   </div>
 </nz-card>
+<ng-template #loading>Loading user...</ng-template>
