@@ -8,7 +8,7 @@ export const loadComment = createAction(
 
 export const loadCommentSuccess = createAction(
   '[Comment] Load Comment Success',
-  props<{ id: number, comment: Comment }>()
+  props<{ id: number, comment: any }>()
 );
 
 export const loadCommentFailure = createAction(

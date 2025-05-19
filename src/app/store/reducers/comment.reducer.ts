@@ -2,10 +2,8 @@ import { createReducer, on } from "@ngrx/store";
 import * as CommentActions from "../actions/comment.actions";
 import { Comment } from '../../models/comment';
 
-export const commentFeatureKey = 'comment';
-
 export interface CommentState {
-  commentsById: { [id: number]: Comment };
+  commentsById: { [id: number]: any };
   loading: boolean;
   error: any;
 }
@@ -24,11 +22,11 @@ export const commentReducer = createReducer(
   })),
   on(CommentActions.loadCommentSuccess, (state, { id, comment }) => ({
     ...state,
+    loading: false,
     commentsById: {
       ...state.commentsById,
       [id]: comment
-    },
-    loading: false
+    }
   })),
   on(CommentActions.loadCommentFailure, (state, { error }) => ({
     ...state,

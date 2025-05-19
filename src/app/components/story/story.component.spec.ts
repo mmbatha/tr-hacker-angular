@@ -4,9 +4,16 @@ import { StoryComponent } from './story.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { StoryService } from '../../services/story.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('StoryComponent', () => {
+  let store: MockStore;
   let fixture: ComponentFixture<StoryComponent>;
+
+  const initialState = {
+    story: {},
+    loading: false
+  }
 
   const mockService = {
     getStory: () => of({
@@ -29,11 +36,12 @@ describe('StoryComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StoryComponent],
-      providers: [
+      providers: [provideMockStore({ initialState }),
         { provide: ActivatedRoute, useValue: { paramMap: of(new Map([['id', 'story123']])) } },
         { provide: StoryService, useValue: mockService }]
     });
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(StoryComponent);
     fixture.detectChanges();
   });

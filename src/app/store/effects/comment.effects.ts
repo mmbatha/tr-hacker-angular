@@ -15,7 +15,7 @@ export class CommentEffects {
       ofType(CommentActions.loadComment),
       mergeMap(action =>
         this.commentService.getComment(action.id).pipe(
-          map((comment: Comment) => CommentActions.loadCommentSuccess({ id: action.id, comment })),
+          map(comment => CommentActions.loadCommentSuccess({ id: action.id, comment })),
           catchError(error => of(CommentActions.loadCommentFailure({ id: action.id, error })))
         )
       )

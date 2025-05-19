@@ -3,9 +3,16 @@ import { StoryService } from "../../services/story.service";
 import { CommentComponent } from './comment.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('CommentComponent', () => {
+  let store: MockStore;
   let fixture: ComponentFixture<CommentComponent>;
+
+  const initialState = {
+    comments: {},
+    loading: false
+  };
 
   const mockService = {
     getComment: () => of({
@@ -18,12 +25,13 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CommentComponent],
-      providers: [{ provide: StoryService, useValue: mockService },
+      providers: [provideMockStore({ initialState }), { provide: StoryService, useValue: mockService },
       { provide: ActivatedRoute, useValue: { paramMap: of(new Map([['by', 'user123']])) } }]
     });
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(CommentComponent);
-    fixture.componentInstance.id = 123;
+    fixture.componentInstance.commentId = 123;
     fixture.detectChanges();
   });
 

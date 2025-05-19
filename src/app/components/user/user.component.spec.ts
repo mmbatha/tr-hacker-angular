@@ -3,9 +3,15 @@ import { ActivatedRoute } from "@angular/router";
 import { UserComponent } from './user.component';
 import { StoryService } from '../../services/story.service';
 import { of } from 'rxjs';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('UserComponent', () => {
+  let store: MockStore;
   let fixture: ComponentFixture<UserComponent>;
+  const initialState = {
+    user: {},
+    loading: false
+  };
 
   const mockService = {
     getUser: () => of({
@@ -17,14 +23,15 @@ describe('UserComponent', () => {
   };
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [UserComponent],
-      providers: [
+      providers: [provideMockStore({ initialState }),
         { provide: StoryService, useValue: mockService },
         { provide: ActivatedRoute, useValue: { paramMap: of(new Map([['id', 'user123']])) } }
       ]
     });
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(UserComponent);
     fixture.detectChanges();
   });

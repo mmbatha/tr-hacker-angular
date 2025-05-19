@@ -6,7 +6,7 @@ export const selectCommentState = createFeatureSelector<CommentState>('comments'
 
 export const selectCommentById = (id: number) => createSelector(
   selectCommentState,
-  state => state.commentsById[id] as Comment | undefined
+  state => state.commentsById[id] as Comment
 );
 
 export const selectCommentLoading = createSelector(
