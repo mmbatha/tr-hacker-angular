@@ -1,27 +1,35 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, switchMap } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
-import * as StoryActions from '../actions/story.actions';
-import { StoryService } from '../../services/story.service';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError, concatMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { StoryActions } from '../actions/story.actions';
 
 
 @Injectable()
 export class StoryEffects {
   private actions$ = inject(Actions);
-  constructor(private storyService: StoryService) { }
+  constructor(private http: HttpClient) { }
 
   loadTopStories$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StoryActions.loadTopStories),
-      switchMap(() =>
-        this.storyService.getTopStoryIds().pipe(
-          switchMap(ids => {
-            const top20 = ids.slice(0, 20);
-            const storyRequests = top20.map(id => this.storyService.getStory(id)); return forkJoin(storyRequests);
-          }),
-          map(stories => StoryActions.loadTopStoriesSuccess({ stories })),
+      concatMap(() =>
+        this.http.get<number[]>('https://hacker-news.firebaseio.com/v0/topstories.json').pipe(
+          map(ids => StoryActions.loadTopStoriesSuccess({ ids: ids.slice(0, 20) })),
           catchError(error => of(StoryActions.loadTopStoriesFailure({ error })))
+        )
+      )
+    );
+  });
+
+  loadStory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StoryActions.loadStory),
+      concatMap(action =>
+        this.http.get<any>(`https://hacker-news.firebaseio.com/v0/item/${action.id}.json`).pipe(
+          map(story => StoryActions.loadStorySuccess({ story })),
+          catchError(error => of(StoryActions.loadStoryFailure({ error })))
         )
       )
     );

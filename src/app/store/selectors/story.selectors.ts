@@ -5,9 +5,9 @@ export const selectStoryState = createFeatureSelector<fromStore.State>(
   fromStore.storeFeatureKey
 );
 
-export const selectStories = createSelector(
+export const selectStoryIds = createSelector(
   selectStoryState,
-  state => state.topStories
+  state => state.topStoryIds
 );
 
 export const selectLoading = createSelector(
