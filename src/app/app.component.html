@@ -1,1 +1,18 @@
-<router-outlet />
+<nz-layout>
+  <nz-header>
+    <div class="logo">HackerNews</div>
+    <!-- <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item [routerLink]="['/']">Top Stories</li>
+    </ul> -->
+  </nz-header>
+  <nz-content style="padding: 24px 50px;">
+    <router-outlet />
+  </nz-content>
+  <nz-footer>
+    <div class="footer">
+      <a href="https://www.flaticon.com/free-icons/article" title="article icons">Article icons created by Freepik -
+        Flaticon</a>
+    </div>
+
+  </nz-footer>
+  </nz-layout>

@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommentComponent } from '../comment/comment.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { StoryActions } from '../../store/actions/story.actions';
+import * as StoryActions from '../../store/actions/story.actions';
 import { CommonModule } from '@angular/common';
 
 @Component({
