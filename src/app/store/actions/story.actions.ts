@@ -1,4 +1,4 @@
-import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Story } from '../../models/story';
 
 export const loadTopStories = createAction(

@@ -3,11 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommentComponent } from '../comment/comment.component';
 import { Observable, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CommonModule, DatePipe } from '@angular/common';
-import { Story } from '../../models/story';
-import { StoryService } from '../../services/story.service';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import * as StoryActions from '../../store/actions/story.actions';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-story',
