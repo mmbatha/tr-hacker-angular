@@ -1,8 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromStore from '../reducers/story.reducer';
+import { StoryState } from '../reducers/story.reducer';
 
-export const selectStoryState = createFeatureSelector<fromStore.State>(
-  fromStore.storeFeatureKey
+export const selectStoryState = createFeatureSelector<StoryState>(
+  'stories'
 );
 
 export const selectStories = createSelector(
@@ -10,7 +10,17 @@ export const selectStories = createSelector(
   state => state.topStories
 );
 
-export const selectLoading = createSelector(
+export const selectStory = createSelector(
+  selectStoryState,
+  state => state.story
+)
+
+export const selectStoryLoading = createSelector(
   selectStoryState,
   state => state.loading
 );
+
+export const selectStoryError = createSelector(
+  selectStoryState,
+  state => state.error
+)

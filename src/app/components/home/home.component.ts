@@ -6,7 +6,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar'
 import { Store } from '@ngrx/store';
 import * as StoryActions from '../../store/actions/story.actions';
 import { Observable } from 'rxjs';
-import { selectLoading, selectStories } from '../../store/selectors/story.selectors';
+import { selectStoryLoading, selectStories } from '../../store/selectors/story.selectors';
 import { Story } from '../../models/story';
 
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(StoryActions.loadTopStories());
     this.stories$ = this.store.select(selectStories);
-    this.loading$ = this.store.select(selectLoading);
+    this.loading$ = this.store.select(selectStoryLoading);
   }
 
   getFaviconUrl(storyUrl: string): string {

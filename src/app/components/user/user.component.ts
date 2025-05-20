@@ -1,10 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
 import { NzCardModule } from "ng-zorro-antd/card";
 import { NzTypographyModule } from "ng-zorro-antd/typography";
-import { StoryService } from '../../services/story.service';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { Store } from '@ngrx/store';
 import { selectUser, selectUserLoading } from '../../store/selectors/user.selectors';
@@ -25,7 +23,7 @@ export class UserComponent {
   loading$ = this.store.select(selectUserLoading);
 
   constructor() {
-    const id = this.route.snapshot.paramMap.get('id')!;
+    const id = this.route.snapshot.paramMap.get('userId')!;
     this.store.dispatch(loadUser({ id }));
   }
 

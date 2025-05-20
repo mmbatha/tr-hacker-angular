@@ -15,7 +15,7 @@ export class StoryEffects {
     return this.actions$.pipe(
       ofType(StoryActions.loadTopStories),
       switchMap(() =>
-        this.storyService.getTopStoryIds().pipe(
+        this.storyService.getTopStories().pipe(
           switchMap(ids => {
             const top20 = ids.slice(0, 20);
             const storyRequests = top20.map(id => this.storyService.getStory(id)); return forkJoin(storyRequests);
@@ -25,5 +25,17 @@ export class StoryEffects {
         )
       )
     );
+  });
+
+  loadStory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StoryActions.loadStory),
+      switchMap(action =>
+        this.storyService.getStory(action.id).pipe(
+          map(story => StoryActions.loadStorySuccess({ story })),
+          catchError(error => of(StoryActions.loadStoryFailure({ error })))
+        )
+      )
+    )
   });
 }

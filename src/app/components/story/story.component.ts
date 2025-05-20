@@ -1,26 +1,30 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CommentComponent } from '../comment/comment.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as StoryActions from '../../store/actions/story.actions';
 import { CommonModule } from '@angular/common';
+import { selectStoryLoading, selectStory } from '../../store/selectors/story.selectors';
+import { NzCardModule } from "ng-zorro-antd/card";
+import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-story',
-  imports: [RouterLink, CommentComponent, CommonModule],
+  imports: [CommonModule, NzCardModule, RouterLink, CommentComponent],
   templateUrl: './story.component.html',
   styleUrl: './story.component.css'
 })
-export class StoryComponent implements OnInit {
+export class StoryComponent {
+  private route = inject(ActivatedRoute);
   private store = inject(Store);
-  story$: Observable<any> | undefined;
 
-  constructor(private route: ActivatedRoute) { }
+  story$ = this.store.select(selectStory);
+  loading$ = this.store.select(selectStoryLoading);
 
-  ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
+  constructor() {
+    const id = +this.route.snapshot.paramMap.get('storyId')!;
     this.store.dispatch(StoryActions.loadStory({ id }));
-    this.story$ = this.store.select(state => state.stories.stories[id]);
+    this.story$ = this.store.select(selectStory);
+    this.loading$ = this.store.select(selectStoryLoading);
   }
 }

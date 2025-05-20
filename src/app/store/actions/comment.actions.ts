@@ -1,5 +1,4 @@
 import { createAction, props } from "@ngrx/store";
-import { Comment } from '../../models/comment';
 
 export const loadComment = createAction(
   '[Comment] Load Comment',
@@ -8,10 +7,10 @@ export const loadComment = createAction(
 
 export const loadCommentSuccess = createAction(
   '[Comment] Load Comment Success',
-  props<{ id: number, comment: any }>()
+  props<{ comment: any }>()
 );
 
 export const loadCommentFailure = createAction(
   '[Comment] Load Comment Failure',
-  props<{ id: number, error: any }>()
+  props<{ error: any }>()
 );

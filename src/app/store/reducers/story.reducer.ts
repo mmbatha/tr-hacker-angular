@@ -1,19 +1,19 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as StoryActions from '../actions/story.actions';
 import { Story } from '../../models/story';
 
 export const storeFeatureKey = 'stories';
 
-export interface State {
+export interface StoryState {
   topStories: Story[];
-  story: { [id: number]: any };
+  story: any | null;
   loading: boolean;
   error: any;
 }
 
-export const initialState: State = {
+export const initialState: StoryState = {
   topStories: [],
-  story: {},
+  story: null,
   loading: false,
   error: null
 };
@@ -22,8 +22,7 @@ export const storyReducer = createReducer(
   initialState,
   on(StoryActions.loadTopStories, state => ({
     ...state,
-    loading: true,
-    error: null
+    loading: true
   })),
   on(StoryActions.loadTopStoriesSuccess, (state, { stories }) => ({
     ...state,
@@ -37,15 +36,11 @@ export const storyReducer = createReducer(
   })),
   on(StoryActions.loadStory, state => ({
     ...state,
-    loading: true,
-    error: null
+    loading: true
   })),
   on(StoryActions.loadStorySuccess, (state, { story }) => ({
     ...state,
-    stories: {
-      ...state.story,
-      story: story
-    },
+    story,
     loading: false
   })),
   on(StoryActions.loadStoryFailure, (state, { error }) => ({
@@ -54,8 +49,3 @@ export const storyReducer = createReducer(
     error
   }))
 );
-
-export const storeFeature = createFeature({
-  name: storeFeatureKey, reducer:
-    storyReducer,
-});

@@ -1,15 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
 import * as CommentActions from "../actions/comment.actions";
-import { Comment } from '../../models/comment';
 
 export interface CommentState {
-  commentsById: { [id: number]: any };
+  comment: any | null;
   loading: boolean;
   error: any;
 }
 
 export const initialState: CommentState = {
-  commentsById: {},
+  comment: null,
   loading: false,
   error: null
 }
@@ -20,17 +19,14 @@ export const commentReducer = createReducer(
     ...state,
     loading: true
   })),
-  on(CommentActions.loadCommentSuccess, (state, { id, comment }) => ({
+  on(CommentActions.loadCommentSuccess, (state, { comment }) => ({
     ...state,
+    comment,
     loading: false,
-    commentsById: {
-      ...state.commentsById,
-      [id]: comment
-    }
   })),
   on(CommentActions.loadCommentFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error
   }))
-)
+);

@@ -14,7 +14,7 @@ export class StoryService {
     return this.http.get<Story>(`${this.baseUrl}/item/${id}.json`);
   }
 
-  getTopStoryIds(): Observable<number[]> {
+  getTopStories(): Observable<number[]> {
     return this.http.get<number[]>(`${this.baseUrl}/topstories.json`);
   }
 }

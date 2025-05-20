@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ stories: storyReducer, users: userReducer, comments: commentReducer }),
+    provideStore({ story: storyReducer, stories: storyReducer, users: userReducer, comments: commentReducer }),
     provideHttpClient(),
     provideNzI18n(en_GB),
     importProvidersFrom(FormsModule),

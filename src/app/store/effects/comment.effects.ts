@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CommentService } from '../../services/comment.service';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import * as CommentActions from '../actions/comment.actions';
-import { Comment } from '../../models/comment';
 
 @Injectable()
 export class CommentEffects {
@@ -15,8 +14,8 @@ export class CommentEffects {
       ofType(CommentActions.loadComment),
       mergeMap(action =>
         this.commentService.getComment(action.id).pipe(
-          map(comment => CommentActions.loadCommentSuccess({ id: action.id, comment })),
-          catchError(error => of(CommentActions.loadCommentFailure({ id: action.id, error })))
+          map(comment => CommentActions.loadCommentSuccess({ comment })),
+          catchError(error => of(CommentActions.loadCommentFailure({ error })))
         )
       )
     ));

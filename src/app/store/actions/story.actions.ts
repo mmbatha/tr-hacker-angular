@@ -19,7 +19,7 @@ export const loadStory = createAction(
 );
 
 export const loadStorySuccess = createAction('[Story] Load Story Success',
-  props<{ story: Story }>()
+  props<{ story: any }>()
 );
 
 export const loadStoryFailure = createAction('[Story] Load Story Failure',

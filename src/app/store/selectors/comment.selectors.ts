@@ -1,12 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CommentState } from '../reducers/comment.reducer';
-import { Comment } from '../../models/comment';
 
 export const selectCommentState = createFeatureSelector<CommentState>('comments');
 
-export const selectCommentById = (id: number) => createSelector(
+export const selectComment = createSelector(
   selectCommentState,
-  state => state.commentsById[id] as Comment
+  state => state.comment
 );
 
 export const selectCommentLoading = createSelector(
