@@ -1,14 +1,27 @@
 <h2>Top Stories</h2>
-<nz-list [nzLoading]="loading$ | async" *ngIf="stories$ | async as stories">
-  <nz-list-item *ngFor="let story of stories">
-    <nz-list-item-meta [nzAvatar]="getFaviconUrl(story.url)" [nzTitle]="nzTitleTpl" [nzDescription]="nzDescTpl">
-    </nz-list-item-meta>
-    <ng-template #nzTitleTpl>
-      <a [routerLink]="['/item', story.id]">{{ story.title }}</a>
-    </ng-template>
-    <ng-template #nzDescTpl>
-      <span>by {{story.by}}</span>
-    </ng-template>
-
-  </nz-list-item>
-</nz-list>
+<nz-collapse *ngIf="stories$ | async as stories" nzAccordion>
+  @for (story of stories; track story) {
+  <nz-collapse-panel [nzHeader]="nzHeaderTpl" [nzExtra]="nzExtraTpl">
+    <p>
+      <strong>author</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |
+      <strong>score</strong> {{story.score}} |
+      <strong>comments</strong> {{story.descendants}} |
+      <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
+    </p>
+    <p *ngIf="story.url">
+      <a [href]="story.url" target="_blank">Read original</a>
+    </p>
+    <nz-list [nzDataSource]="story.kids" [nzRenderItem]="kid" [nzItemLayout]="'horizontal'">
+      <ng-template #kid let-kid>
+        <app-comment [commentId]="kid" />
+      </ng-template>
+    </nz-list>
+  </nz-collapse-panel>
+  <ng-template #nzHeaderTpl>
+    <h4>{{story.title}}</h4>
+  </ng-template>
+  <ng-template #nzExtraTpl>
+    <img nz-image [nzSrc]="getFaviconUrl(story.url)" alt="Article icon">
+  </ng-template>
+  }
+  </nz-collapse>

@@ -1,8 +1,6 @@
-<nz-comment *ngIf="comment$ | async as c; else loading" [nzAuthor]="c.by"
+<nz-comment *ngIf="comment$ | async as c" [nzAuthor]="c.by"
   [nzDatetime]="(c.time * 1000 | date:'medium') ?? ''">
   <nz-comment-content>
     <div [innerHTML]="c.text | safeHtml"></div>
   </nz-comment-content>
 </nz-comment>
-<ng-template #loading>Loading comment...</ng-template>
-<!-- <div *ngIf="comment$ | async as comment">{{comment | json }}</div> -->

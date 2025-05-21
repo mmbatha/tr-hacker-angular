@@ -3,17 +3,21 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzListModule } from 'ng-zorro-antd/list'
 import { NzAvatarModule } from 'ng-zorro-antd/avatar'
+import { NzCollapseModule } from 'ng-zorro-antd/collapse'
+import { NzImageModule } from 'ng-zorro-antd/image'
+import { NzGridModule } from 'ng-zorro-antd/grid'
 import { Store } from '@ngrx/store';
 import * as StoryActions from '../../store/actions/story.actions';
 import { Observable } from 'rxjs';
 import { selectStoryLoading, selectStories } from '../../store/selectors/story.selectors';
 import { Story } from '../../models/story';
+import { CommentComponent } from '../comment/comment.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule],
+  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule, NzCollapseModule, CommentComponent, NzImageModule, NzGridModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

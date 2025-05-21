@@ -5,7 +5,10 @@ export const selectCommentState = createFeatureSelector<CommentState>('comments'
 
 export const selectComment = (id: number) => createSelector(
   selectCommentState,
-  state => state.comment[id]
+  state => {
+    const comment = state.comment[id];
+    return comment && !comment.deleted ? comment : null;
+  }
 );
 
 export const selectCommentLoading = createSelector(

@@ -1,9 +1,9 @@
 <div *ngIf="story$ | async as story">
   <h2>{{story.title}}</h2>
   <p>
-    <strong>by</strong><a [routerLink]="['/user',story.by]"> {{story.by | json}}</a> |
-    <strong>score</strong> {{story.score | json}} |
-    <strong>comments</strong> {{story.descendants | json}} |
+    <strong>by</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |
+    <strong>score</strong> {{story.score}} |
+    <strong>comments</strong> {{story.descendants}} |
     <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
   </p>
   <p *ngIf="story.url">
