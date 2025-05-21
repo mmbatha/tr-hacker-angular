@@ -7,6 +7,9 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar'
 import { NzCollapseModule } from 'ng-zorro-antd/collapse'
 import { NzImageModule } from 'ng-zorro-antd/image'
 import { NzGridModule } from 'ng-zorro-antd/grid'
+import { NzTagModule } from 'ng-zorro-antd/tag'
+import { NzBadgeModule } from 'ng-zorro-antd/badge'
+import { NzIconModule } from 'ng-zorro-antd/icon'
 import { Store } from '@ngrx/store';
 import * as StoryActions from '../../store/actions/story.actions';
 import { Observable } from 'rxjs';
@@ -18,7 +21,7 @@ import { CommentComponent } from '../comment/comment.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule, NzCollapseModule, CommentComponent, NzImageModule, NzGridModule, ScrollingModule],
+  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule, NzCollapseModule, CommentComponent, NzImageModule, NzGridModule, ScrollingModule, NzTagModule, NzBadgeModule, NzIconModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

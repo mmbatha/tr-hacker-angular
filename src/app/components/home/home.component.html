@@ -3,22 +3,24 @@
   @for (story of stories; track story) {
   <nz-collapse-panel [nzHeader]="nzHeaderTpl" [nzExtra]="nzExtraTpl">
     <div class="story-meta">
+      <nz-badge [nzStatus]="'processing'" [nzText]="'Hot!'" *ngIf="story.score > 100" nzStandalone>
+      </nz-badge>
       <strong>author</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |
-      <strong>score</strong> {{story.score}} |
+      <strong>score</strong> <nz-tag nzColor="geekblue">{{story.score}}</nz-tag> |
       <strong>comments</strong> {{story.descendants}} |
       <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
     </div>
     <p *ngIf="story.url">
       <a [href]="story.url" target="_blank">Read original</a>
     </p>
-    <div *ngIf="story.kids?.length">
-      <nz-list [nzDataSource]="getVisibleComments(story)" [nzRenderItem]="commentId">
+    <div *ngIf="story.kids?.length" class="comment-list">
+      <nz-list [nzLoading]="loading$ | async" [nzDataSource]="getVisibleComments(story)" [nzRenderItem]="commentId">
         <ng-template #commentId let-id>
           <app-comment [commentId]="id" />
         </ng-template>
       </nz-list>
 <div class="load-more" *ngIf="hasMoreComments(story)">
-  <a [routerLink]="['/item',story.id]">Load more comments</a>
+  <a [routerLink]="['/item', story.id]">Load more comments</a>
 </div>
 </div>
 <div *ngIf="!story.kids?.length">No comments.</div>
