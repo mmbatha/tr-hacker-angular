@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzListModule } from 'ng-zorro-antd/list'
 import { NzAvatarModule } from 'ng-zorro-antd/avatar'
 import { NzCollapseModule } from 'ng-zorro-antd/collapse'
@@ -17,13 +18,14 @@ import { CommentComponent } from '../comment/comment.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule, NzCollapseModule, CommentComponent, NzImageModule, NzGridModule],
+  imports: [RouterModule, CommonModule, NzListModule, NzAvatarModule, NzCollapseModule, CommentComponent, NzImageModule, NzGridModule, ScrollingModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   stories$!: Observable<Story[]>;
   loading$!: Observable<boolean>;
+  visibleComments: { [storyId: number]: number } = {};
 
   /**
    * Basic ctor.
@@ -44,5 +46,16 @@ export class HomeComponent implements OnInit {
     } catch {
       return 'assets/default-icon.png';
     }
+  }
+
+  getVisibleComments(story: Story): number[] {
+    const limit = this.visibleComments[story.id] || 5;
+    return story.kids?.slice(0, limit) || [];
+  }
+
+  hasMoreComments(story: Story): boolean {
+    const total = story.kids?.length || 0;
+    const visble = this.visibleComments[story.id] || 5;
+    return total > visble;
   }
 }

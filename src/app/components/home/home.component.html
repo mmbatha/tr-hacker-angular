@@ -11,11 +11,17 @@
     <p *ngIf="story.url">
       <a [href]="story.url" target="_blank">Read original</a>
     </p>
-    <nz-list [nzDataSource]="story.kids" [nzRenderItem]="kid" [nzItemLayout]="'horizontal'">
-      <ng-template #kid let-kid>
-        <app-comment [commentId]="kid" />
-      </ng-template>
-    </nz-list>
+    <div *ngIf="story.kids?.length">
+      <nz-list [nzDataSource]="getVisibleComments(story)" [nzRenderItem]="commentId">
+        <ng-template #commentId let-id>
+          <app-comment [commentId]="id" />
+        </ng-template>
+      </nz-list>
+<div class="load-more" *ngIf="hasMoreComments(story)">
+  <a [routerLink]="['/item',story.id]">Load more comments</a>
+</div>
+</div>
+<div *ngIf="!story.kids?.length">No comments.</div>
   </nz-collapse-panel>
   <ng-template #nzHeaderTpl>
     <h4>{{story.title}}</h4>
