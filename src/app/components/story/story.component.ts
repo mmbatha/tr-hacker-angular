@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as StoryActions from '../../store/actions/story.actions';
 import { CommonModule } from '@angular/common';

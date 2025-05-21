@@ -1,13 +1,14 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectComment, selectCommentLoading } from '../../store/selectors/comment.selectors';
 import { loadComment } from '../../store/actions/comment.actions';
+import { Observable } from 'rxjs';
+import { Comment } from '../../models/comment';
 
 @Component({
   selector: 'app-comment',
@@ -15,20 +16,18 @@ import { loadComment } from '../../store/actions/comment.actions';
   imports: [NzCommentModule, DatePipe, CommonModule, SafeHtmlPipe, NzSkeletonModule, NzLayoutModule],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
-  // inputs: ['commentId']
 })
 export class CommentComponent implements OnInit {
   @Input() commentId!: number;
-  private store = inject(Store);
+  comment$!: Observable<Comment>;
+  loading$!: Observable<boolean>;
 
-  comment$ = this.store.select(selectComment);
-  loading$ = this.store.select(selectCommentLoading);
+  constructor(private store: Store) { }
 
-  constructor() {
-
-  }
   ngOnInit(): void {
     this.store.dispatch(loadComment({ id: this.commentId }));
+    this.comment$ = this.store.select(selectComment(this.commentId));
+    this.loading$ = this.store.select(selectCommentLoading);
   }
 
 }

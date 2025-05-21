@@ -12,11 +12,6 @@
 
   <div *ngIf="story.kids?.length">
     <h3>Comments</h3>
-    <ul>
-      <li *ngFor="let kid of story.kids">
-        {{kid}}
-        <app-comment [commentId]="kid"></app-comment>
-      </li>
-    </ul>
+    <app-comment *ngFor="let kid of story.kids" [commentId]="kid" />
   </div>
 </div>

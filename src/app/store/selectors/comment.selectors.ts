@@ -3,9 +3,9 @@ import { CommentState } from '../reducers/comment.reducer';
 
 export const selectCommentState = createFeatureSelector<CommentState>('comments');
 
-export const selectComment = createSelector(
+export const selectComment = (id: number) => createSelector(
   selectCommentState,
-  state => state.comment
+  state => state.comment[id]
 );
 
 export const selectCommentLoading = createSelector(
