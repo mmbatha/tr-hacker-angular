@@ -2,12 +2,12 @@
 <nz-collapse *ngIf="stories$ | async as stories" nzAccordion>
   @for (story of stories; track story) {
   <nz-collapse-panel [nzHeader]="nzHeaderTpl" [nzExtra]="nzExtraTpl">
-    <p>
+    <div class="story-meta">
       <strong>author</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |
       <strong>score</strong> {{story.score}} |
       <strong>comments</strong> {{story.descendants}} |
       <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
-    </p>
+    </div>
     <p *ngIf="story.url">
       <a [href]="story.url" target="_blank">Read original</a>
     </p>
@@ -21,7 +21,7 @@
     <h4>{{story.title}}</h4>
   </ng-template>
   <ng-template #nzExtraTpl>
-    <img nz-image [nzSrc]="getFaviconUrl(story.url)" alt="Article icon">
+    <img nz-image [nzSrc]="getFaviconUrl(story.url)" alt="Article icon" class="favicon">
   </ng-template>
   }
-  </nz-collapse>
+</nz-collapse>
