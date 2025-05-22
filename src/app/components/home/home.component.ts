@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
 
   hasMoreComments(story: Story): boolean {
     const total = story.kids?.length || 0;
-    const visble = this.visibleComments[story.id] || 5;
-    return total > visble;
+    const visible = this.visibleComments[story.id] || 5;
+    return total > visible;
   }
 }

@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { Store } from '@ngrx/store';
@@ -13,12 +13,13 @@ import { Comment } from '../../models/comment';
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [NzCommentModule, DatePipe, CommonModule, SafeHtmlPipe, NzSkeletonModule, NzLayoutModule],
+  imports: [NzCommentModule, DatePipe, CommonModule, SafeHtmlPipe, NzSpinModule, NzLayoutModule],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
 export class CommentComponent implements OnInit {
   @Input() commentId!: number;
+  @Input() elementId?: string;
   comment$!: Observable<Comment>;
   loading$!: Observable<boolean>;
 

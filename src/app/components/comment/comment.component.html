@@ -1,6 +1,9 @@
-<nz-comment *ngIf="comment$ | async as c" [nzAuthor]="c.by"
-  [nzDatetime]="(c.time * 1000 | date:'medium') ?? ''">
+<nz-comment *ngIf="comment$ | async as c; else loading" [nzAuthor]="c.by"
+  [nzDatetime]="(c.time * 1000 | date:'medium') ?? ''" [attr.data-comment]="true" [attr.id]="elementId">
   <nz-comment-content>
     <div [innerHTML]="c.text | safeHtml"></div>
   </nz-comment-content>
 </nz-comment>
+<ng-template #loading>
+  <nz-spin *ngIf="loading$ | async"></nz-spin>
+</ng-template>

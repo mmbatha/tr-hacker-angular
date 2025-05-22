@@ -15,15 +15,15 @@
     </p>
     <div *ngIf="story.kids?.length" class="comment-list">
       <nz-list [nzLoading]="loading$ | async" [nzDataSource]="getVisibleComments(story)" [nzRenderItem]="commentId">
-        <ng-template #commentId let-id>
-          <app-comment [commentId]="id" />
+        <ng-template #commentId let-id let-i="index">
+          <app-comment [commentId]="id" [elementId]="'comment' + i" />
         </ng-template>
       </nz-list>
-<div class="load-more" *ngIf="hasMoreComments(story)">
-  <a [routerLink]="['/item', story.id]">Load more comments</a>
-</div>
-</div>
-<div *ngIf="!story.kids?.length">No comments.</div>
+      <div class="load-more" *ngIf="hasMoreComments(story)">
+        <a [routerLink]="['/item', story.id]" [fragment]="'comment-4'">Load more comments</a>
+        </div>
+        </div>
+        <div *ngIf="!story.kids?.length">No comments.</div>
   </nz-collapse-panel>
   <ng-template #nzHeaderTpl>
     <h4>{{story.title}}</h4>
