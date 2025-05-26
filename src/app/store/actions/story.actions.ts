@@ -49,3 +49,18 @@ export const loadBestStoriesSuccess = createAction('[Story] Load Best Stories Su
 export const loadBestStoriesFailure = createAction('[Story] Load Best Stories Failure',
   props<{ error: any }>()
 );
+
+export const loadStories = createAction(
+  '[Story] Load Stories',
+  props<{ storyType: string }>()
+);
+
+export const loadStoriesSuccess = createAction(
+  '[Story] Load Stories Success',
+  props<{ stories: Story[] }>()
+);
+
+export const loadStoriesFailure = createAction(
+  '[Story] Load Stories Failure',
+  props<{ error: any }>()
+)

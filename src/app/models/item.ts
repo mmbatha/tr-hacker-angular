@@ -1,4 +1,7 @@
 export interface Item {
+  /*
+  * The item's unique id.
+  */
   id: number; //	The item's unique id.
   deleted?: boolean; //	true if the item is deleted.
   type?: string; //	The type of item. One of "job", "story", "comment", "poll", or "pollopt".

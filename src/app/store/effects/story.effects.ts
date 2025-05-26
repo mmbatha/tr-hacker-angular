@@ -22,51 +22,19 @@ export class StoryEffects {
     )
   });
 
-  loadTopStories$ = createEffect(() => {
+  loadStories$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoryActions.loadTopStories),
-      switchMap(() =>
-        this.storyService.getTopStories().pipe(
+      ofType(StoryActions.loadStories),
+      switchMap(({ storyType }) =>
+        this.storyService.getStoriesByType(storyType).pipe(
           switchMap(ids => {
             const top20 = ids.slice(0, 20);
-            const storyRequests = top20.map(id => this.storyService.getStory(id)); return forkJoin(storyRequests);
+            const storyRequests = top20.map(id => this.storyService.getStory(id));
+            return forkJoin(storyRequests);
           }),
-          map(stories => StoryActions.loadTopStoriesSuccess({ stories })),
-          catchError(error => of(StoryActions.loadTopStoriesFailure({ error })))
-        )
-      )
-    );
-  });
-
-  loadBestStories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(StoryActions.loadBestStories),
-      switchMap(() =>
-        this.storyService.getBestStories().pipe(
-          switchMap(ids => {
-            const top20 = ids.slice(0, 20);
-            const storyRequests = top20.map(id => this.storyService.getStory(id)); return forkJoin(storyRequests);
-          }),
-          map(stories => StoryActions.loadBestStoriesSuccess({ stories })),
-          catchError(error => of(StoryActions.loadBestStoriesFailure({ error })))
-        )
-      )
-    );
-  });
-
-  loadNewStories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(StoryActions.loadNewStories),
-      switchMap(() =>
-        this.storyService.getNewStories().pipe(
-          switchMap(ids => {
-            const top20 = ids.slice(0, 20);
-            const storyRequests = top20.map(id => this.storyService.getStory(id)); return forkJoin(storyRequests);
-          }),
-          map(stories => StoryActions.loadNewStoriesSuccess({ stories })),
-          catchError(error => of(StoryActions.loadNewStoriesFailure({ error })))
-        )
-      )
-    );
-  });
+          map(stories => StoryActions.loadStoriesSuccess({ stories })),
+          catchError(error => of(StoryActions.loadStoriesFailure({ error })))
+        ))
+    )
+  })
 }

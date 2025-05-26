@@ -1,24 +1,35 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
-import { UserActions } from '../actions/user.actions';
+import { createReducer, on } from "@ngrx/store";
+import * as UserActions from '../actions/user.actions';
+import { Status } from '../../models/status';
+import { User } from '../../models/user';
 
-export const userFeatureKey = 'user';
-
-export interface State {
-
-}
-
-export const initialState: State = {
-
+export interface UserState {
+  user: User | null;
+  status: Status;
+  error: string;
 };
 
-export const reducer = createReducer(
+export const initialState: UserState = {
+  user: null,
+  status: Status.pending,
+  error: ""
+};
+
+export const userReducer = createReducer(
   initialState,
-  on(UserActions.loadUsers, state => state),
-
+  on(UserActions.loadUser, state => ({
+    ...state,
+    status: Status.loading
+  })),
+  on(UserActions.loadUserSuccess, (state, { user }) => ({
+    ...state,
+    user,
+    status: Status.success
+  })),
+  on(UserActions.loadUserFailure, (state, { error }) => ({
+    ...state,
+    error,
+    status: Status.error
+  }))
 );
-
-export const userFeature = createFeature({
-  name: userFeatureKey,
-  reducer,
-});
 

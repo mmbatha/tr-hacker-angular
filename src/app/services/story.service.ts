@@ -7,7 +7,7 @@ import { Story } from '../models/story';
   providedIn: 'root'
 })
 export class StoryService {
-private baseUrl = 'https://hacker-news.firebaseio.com/v0';
+  private baseUrl = 'https://hacker-news.firebaseio.com/v0';
   constructor(private http: HttpClient) { }
 
   getStory(id: number): Observable<Story> {
@@ -24,5 +24,9 @@ private baseUrl = 'https://hacker-news.firebaseio.com/v0';
 
   getBestStories(): Observable<number[]> {
     return this.http.get<number[]>(`${this.baseUrl}/beststories.json`);
+  }
+
+  getStoriesByType(sType: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.baseUrl}/${sType}stories.json`);
   }
 }
