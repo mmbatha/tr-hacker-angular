@@ -1,0 +1,15 @@
+<div class="user-page">
+  <nz-card *ngIf="user$ | async as user; else loading" nzTitle="User: {{ user.id}}" [nzBordered]="true">
+  <p><strong>Karma:</strong> {{ user.karma }}</p>
+  <p><strong>Created:</strong> {{ user.created * 1000 | date:'medium' }}</p>
+  <div *ngIf="user.about">
+    <strong>About:</strong>
+    <div [innerHTML]="user.about | safeHtml"></div>
+  </div>
+  <div *ngIf="!user.about">
+    <strong>About:</strong>
+    <div>Error 404: About section not completed 😢</div>
+  </div>
+</nz-card>
+</div>
+<ng-template #loading>Loading user...</ng-template>
