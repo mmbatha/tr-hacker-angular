@@ -1,5 +1,5 @@
 <div class="user-page">
-  <nz-card *ngIf="user$ | async as user; else loading" nzTitle="User: {{ user.id}}" [nzBordered]="true">
+  <nz-card *ngIf="user$ | ngrxPush as user; else loading" nzTitle="User: {{ user.id}}" [nzBordered]="true">
   <p><strong>Karma:</strong> {{ user.karma }}</p>
   <p><strong>Created:</strong> {{ user.created * 1000 | date:'medium' }}</p>
   <div *ngIf="user.about">

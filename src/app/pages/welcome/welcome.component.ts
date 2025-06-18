@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Story } from '../../models/story';
 import { Store } from '@ngrx/store';
-import { loadStories, loadTopStories } from '../../store/actions/story.actions';
-import { selectStories, selectStoryLoading, selectTopStories } from '../../store/selectors/story.selectors';
+import { loadStories } from '../../store/actions/story.actions';
+import { selectStories, selectStoryLoading } from '../../store/selectors/story.selectors';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzListModule } from 'ng-zorro-antd/list'
 import { NzAvatarModule } from 'ng-zorro-antd/avatar'
@@ -18,10 +18,11 @@ import { CommentComponent } from '../../components/comment/comment.component';
 import { CommonModule } from '@angular/common';
 import { Status } from '../../models/status';
 import { selectCommentLoading } from '../../store/selectors/comment.selectors';
+import { PushPipe } from '@ngrx/component';
 
 @Component({
   selector: 'app-welcome',
-  imports: [RouterModule, ScrollingModule, NzListModule, NzAvatarModule, NzCollapseModule, NzImageModule, NzGridModule, NzTagModule, NzBadgeModule, NzIconModule, CommentComponent, CommonModule],
+  imports: [RouterModule, ScrollingModule, NzListModule, NzAvatarModule, NzCollapseModule, NzImageModule, NzGridModule, NzTagModule, NzBadgeModule, NzIconModule, CommentComponent, CommonModule, PushPipe],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.less'
 })
@@ -41,8 +42,7 @@ export class WelcomeComponent implements OnInit {
       this.storyType = sType;
       this.loadSelectedStories(sType);
     })
-    // this.store.dispatch(loadTopStories());
-    // this.stories$ = this.store.select(selectTopStories);
+
     this.loading$ = this.store.select(selectStoryLoading);
     this.commentStatus$ = this.store.select(selectCommentLoading);
   }

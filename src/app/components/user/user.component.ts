@@ -7,11 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUser, selectUserLoading } from '../../store/selectors/user.selectors';
 import { loadUser } from '../../store/actions/user.actions';
+import { PushPipe } from '@ngrx/component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [DatePipe, CommonModule, NzCardModule, NzTypographyModule, SafeHtmlPipe],
+  imports: [DatePipe, CommonModule, NzCardModule, NzTypographyModule, SafeHtmlPipe, PushPipe],
   templateUrl: './user.component.html',
   styleUrl: './user.component.less'
 })

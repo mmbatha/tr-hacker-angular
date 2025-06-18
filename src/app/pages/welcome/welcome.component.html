@@ -1,5 +1,5 @@
 <h2>{{storyType | titlecase}} Stories</h2>
-<nz-collapse *ngIf="stories$ | async as stories" nzAccordion>
+<nz-collapse *ngIf="stories$ | ngrxPush as stories" nzAccordion>
   @for (story of stories; track story) {
   <nz-collapse-panel [nzHeader]="nzHeaderTpl" [nzExtra]="nzExtraTpl">
     <div class="story-meta">
@@ -14,7 +14,7 @@
       <a [href]="story.url" target="_blank">Read original</a>
     </p>
     <div *ngIf="story.kids?.length" class="comment-list">
-      <nz-list [nzLoading]="(commentStatus$ | async) !== status.success" [nzDataSource]="getVisibleComments(story)"
+      <nz-list [nzLoading]="(commentStatus$ | ngrxPush) !== status.success" [nzDataSource]="getVisibleComments(story)"
         [nzRenderItem]="commentId">
         <ng-template #commentId let-id let-i="index">
           <app-comment [commentId]="id" [elementId]="'comment' + i" />

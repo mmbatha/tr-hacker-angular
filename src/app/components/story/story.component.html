@@ -1,4 +1,4 @@
-<div *ngIf="story$ | async as story">
+<div *ngIf="story$ | ngrxPush as story">
   <h2>{{story.title}}</h2>
   <p>
     <strong>by</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |

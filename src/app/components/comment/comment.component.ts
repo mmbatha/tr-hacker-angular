@@ -10,10 +10,11 @@ import { loadComment } from '../../store/actions/comment.actions';
 import { selectComment, selectCommentLoading } from '../../store/selectors/comment.selectors';
 import { Comment } from "../../models/comment";
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
+import { PushPipe } from '@ngrx/component';
 
 @Component({
   selector: 'app-comment',
-  imports: [NzCommentModule, DatePipe, CommonModule, NzSpinModule, NzLayoutModule, SafeHtmlPipe],
+  imports: [NzCommentModule, DatePipe, CommonModule, NzSpinModule, NzLayoutModule, SafeHtmlPipe, PushPipe],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.less'
 })

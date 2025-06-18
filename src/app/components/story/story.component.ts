@@ -7,10 +7,11 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { Store } from '@ngrx/store';
 import { selectStory, selectStoryLoading } from '../../store/selectors/story.selectors';
 import { loadStory } from '../../store/actions/story.actions';
+import { PushPipe } from '@ngrx/component';
 
 @Component({
   selector: 'app-story',
-  imports: [CommonModule, NzCardModule, RouterLink, CommentComponent, NzListModule],
+  imports: [CommonModule, NzCardModule, RouterLink, CommentComponent, NzListModule, PushPipe],
   templateUrl: './story.component.html',
   styleUrl: './story.component.less'
 })
