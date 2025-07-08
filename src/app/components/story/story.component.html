@@ -12,6 +12,12 @@
 
   <div *ngIf="story.kids?.length" class="comment-list">
     <h3>Comments</h3>
+    @defer (on viewport) {
     <app-comment *ngFor="let kid of story.kids; let i = index" [commentId]="kid" [elementId]="'comment-' + i" />
+    } @placeholder {
+      <p>Future comments</p>
+    } @loading {
+      <p>Loading comments...</p>
+    }
   </div>
 </div>
