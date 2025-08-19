@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ComponentFactoryResolver, inject, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Story } from '../../models/story';
 import { Store } from '@ngrx/store';
@@ -19,8 +19,10 @@ import { CommonModule } from '@angular/common';
 import { Status } from '../../models/status';
 import { selectCommentLoading } from '../../store/selectors/comment.selectors';
 import { PushPipe } from '@ngrx/component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
+  standalone: true,
   selector: 'app-welcome',
   imports: [RouterModule, ScrollingModule, NzListModule, NzAvatarModule, NzCollapseModule, NzImageModule, NzGridModule, NzTagModule, NzBadgeModule, NzIconModule, CommentComponent, CommonModule, PushPipe],
   templateUrl: './welcome.component.html',
@@ -33,8 +35,14 @@ export class WelcomeComponent implements OnInit {
   loading$!: Observable<Status>;
   commentStatus$!: Observable<Status>;
   visibleComments: { [storyId: number]: number } = {};
+  // @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer!: ViewContainerRef;
+vcr = inject(ViewContainerRef);
 
-  constructor(private route: ActivatedRoute, private store: Store) { }
+  constructor(private route: ActivatedRoute,
+     private store: Store,
+    private componentFactoryResolver: ComponentFactoryResolver,
+  private appRef: ApplicationRef
+) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -46,6 +54,7 @@ export class WelcomeComponent implements OnInit {
     this.loading$ = this.store.select(selectStoryLoading);
     this.commentStatus$ = this.store.select(selectCommentLoading);
   }
+
   loadSelectedStories(storyType: string): void {
     this.store.dispatch(loadStories({ storyType }));
     this.stories$ = this.store.select(selectStories);
@@ -70,5 +79,27 @@ export class WelcomeComponent implements OnInit {
     const total = story.kids?.length || 0;
     const visible = this.visibleComments[story.id] || 5;
     return total > visible;
+  }
+
+  openModal(): void {
+    const compRef = this.vcr.createComponent(ModalComponent);
+    compRef.changeDetectorRef.detectChanges();
+    // this.modalContainer.clear(); // Clear previous content
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    // const componentRef = this.modalContainer.createComponent(componentFactory);
+
+    // Pass data to the modal component
+    compRef.instance.modalTitle = 'Dynamic Modal Title';
+    compRef.instance.modalContent = 'This is dynamic content loaded into the modal.';
+
+    // Attach the view to the application ref for change detection
+    this.appRef.attachView(compRef.hostView);
+
+    // Subscribe to events from the modal (e.q., close)
+    compRef.instance.closeModal.subscribe(eventData => {
+      console.log('Modal closed:', eventData);
+      // this.appRef.detachView(compRef.hostView);
+      compRef.destroy();
+    });
   }
 }
