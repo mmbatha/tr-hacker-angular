@@ -81,7 +81,7 @@ vcr = inject(ViewContainerRef);
     return total > visible;
   }
 
-  openModal(): void {
+  openModal(story: Story): void {
     const compRef = this.vcr.createComponent(ModalComponent);
     compRef.changeDetectorRef.detectChanges();
     // this.modalContainer.clear(); // Clear previous content
@@ -89,8 +89,8 @@ vcr = inject(ViewContainerRef);
     // const componentRef = this.modalContainer.createComponent(componentFactory);
 
     // Pass data to the modal component
-    compRef.instance.modalTitle = 'Dynamic Modal Title';
-    compRef.instance.modalContent = 'This is dynamic content loaded into the modal.';
+    compRef.instance.modalTitle = story.title;
+    compRef.instance.modalContent = story.kids![0] ? `First comment: ${story.kids![0]}` : 'No comments available.';
 
     // Attach the view to the application ref for change detection
     this.appRef.attachView(compRef.hostView);

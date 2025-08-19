@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, output, Output, ViewContainerRef } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output, ViewContainerRef } from "@angular/core";
 
 @Component({
   selector: 'app-modal',
@@ -27,7 +27,7 @@ import { Component, EventEmitter, inject, Input, output, Output, ViewContainerRe
 export class ModalComponent {
   @Input() modalTitle!: string;
   @Input() modalContent!: string;
-  closeModal = output<void>();
+  @Output() closeModal = new EventEmitter<void>();
 
   vcr = inject(ViewContainerRef);
 }
