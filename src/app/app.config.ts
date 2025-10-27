@@ -18,6 +18,9 @@ import { commentReducer } from './store/reducers/comment.reducer';
 import { CommentEffects } from './store/effects/comment.effects';
 import { UserEffects } from './store/effects/user.effects';
 import { userReducer } from './store/reducers/user.reducer';
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 registerLocaleData(en);
 
