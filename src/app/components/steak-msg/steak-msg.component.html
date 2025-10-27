@@ -1,0 +1,17 @@
+<div *ngIf="msgDetails$ | async as msgDetails">
+  <div>
+    <label>Cell Number:</label>
+    <input [(ngModel)]="msgDetails.cellNo" />
+  </div>
+  <div>
+    <label>Message:</label>
+    <textarea [(ngModel)]="msgDetails.message"></textarea>
+  </div>
+  <button
+    [disabled]="sendMSGDisabled(msgDetails)"
+    (click)="identity$ | async as identity; handleMSGOk(msgDetails, identity)"
+  >
+    Send MSG
+  </button>
+  <button (click)="handleMSGCancel()">Cancel</button>
+</div>
