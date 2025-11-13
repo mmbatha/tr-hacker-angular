@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
 import { StoryComponent } from './components/story/story.component';
 import { LearnComponent } from './components/learn/learn.component';
+import { MatrixRainComponent } from './components/matrix-rain/matrix-rain.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome/top' },
@@ -9,5 +10,6 @@ export const routes: Routes = [
   { path: 'item/:storyId', component: StoryComponent },
   { path: 'user/:userId', component: UserComponent },
   { path: 'learn', component: LearnComponent },
+  { path: 'simulation', component: MatrixRainComponent },
   { path: '**', redirectTo: '' },
 ];

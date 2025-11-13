@@ -59,5 +59,5 @@ while true; do
             done
         fi
     done
-    sleep 0.05 # Adjust this value to control speed
+    sleep 0.5 # Adjust this value to control speed
 done

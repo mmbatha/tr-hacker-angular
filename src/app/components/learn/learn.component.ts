@@ -122,7 +122,12 @@ export class LearnComponent {
       valueFormatter: this.dateFormatter
      },
     { field: "price",
-      valueFormatter: params => { return 'R' + params.value.toLocaleString(); } // Format with inline function
+      // Convert value from dollars to rands
+      valueFormatter: params => { 
+        const dollars = params.value as number;
+        const exchangeRate = 17.09;
+        params.value = dollars * exchangeRate;
+        return 'R ' + params.value.toLocaleString(); } // Format with inline function
      },
     { field: "successful",
       width: 120,
