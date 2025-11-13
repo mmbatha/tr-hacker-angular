@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, ComponentFactoryResolver, inject, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, Component, ComponentFactoryResolver, inject, OnInit, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Story } from '../../models/story';
 import { Store } from '@ngrx/store';
@@ -35,7 +35,6 @@ export class WelcomeComponent implements OnInit {
   loading$!: Observable<Status>;
   commentStatus$!: Observable<Status>;
   visibleComments: { [storyId: number]: number } = {};
-  // @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer!: ViewContainerRef;
 vcr = inject(ViewContainerRef);
 
   constructor(private route: ActivatedRoute,
@@ -84,16 +83,10 @@ vcr = inject(ViewContainerRef);
   openModal(story: Story): void {
     const compRef = this.vcr.createComponent(ModalComponent);
     compRef.changeDetectorRef.detectChanges();
-    // this.modalContainer.clear(); // Clear previous content
-    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
-    // const componentRef = this.modalContainer.createComponent(componentFactory);
 
     // Pass data to the modal component
     compRef.instance.modalTitle = story.title;
     compRef.instance.modalContent = story.kids![0] ? `First comment: ${story.kids![0]}` : 'No comments available.';
-
-    // Attach the view to the application ref for change detection
-    this.appRef.attachView(compRef.hostView);
 
     // Subscribe to events from the modal (e.q., close)
     compRef.instance.closeModal.subscribe(eventData => {

@@ -8,7 +8,7 @@
       <strong>author</strong><a [routerLink]="['/user',story.by]"> {{story.by}}</a> |
       <strong>score</strong> <nz-tag nzColor="geekblue">{{story.score}}</nz-tag> |
       <strong>comments</strong> {{story.descendants}} |
-      <button nz-button (click)="openModal(story)">Open Modal</button>
+      <button nz-button (click)="openModal(story)">Open Modal</button> |
       <strong>posted</strong> {{story.time * 1000 | date:'medium'}}
       <div #modalContainer></div>
     </div>

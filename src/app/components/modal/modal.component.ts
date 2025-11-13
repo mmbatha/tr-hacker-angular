@@ -6,7 +6,7 @@ import { Component, EventEmitter, inject, Input, Output, ViewContainerRef } from
     <div class="modal">
       <h2>{{modalTitle}}</h2>
       <p>{{modalContent}}</p>
-      <button (click)="closeModal.emit()">Close</button>
+      <button (click)="sendCloseEvent()">Close</button>
     </div>
   `,
   styles: [`
@@ -30,4 +30,8 @@ export class ModalComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   vcr = inject(ViewContainerRef);
+
+  sendCloseEvent() {
+    this.closeModal.emit();
+  }
 }
