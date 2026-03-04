@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, ComponentFactoryResolver, inject, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, inject, OnInit, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Story } from '../../models/story';
 import { Store } from '@ngrx/store';
@@ -38,9 +38,7 @@ export class WelcomeComponent implements OnInit {
 vcr = inject(ViewContainerRef);
 
   constructor(private route: ActivatedRoute,
-     private store: Store,
-    private componentFactoryResolver: ComponentFactoryResolver,
-  private appRef: ApplicationRef
+     private store: Store
 ) { }
 
   ngOnInit(): void {
