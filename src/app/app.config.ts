@@ -19,6 +19,8 @@ import { CommentEffects } from './store/effects/comment.effects';
 import { UserEffects } from './store/effects/user.effects';
 import { userReducer } from './store/reducers/user.reducer';
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+import { menuReducer } from './store/reducers/menu.reducer';
+import { MenuEffects } from './store/effects/menu.effects';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -28,8 +30,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ story: storyReducer, stories: storyReducer, comments: commentReducer, users: userReducer }),
-    provideEffects([StoryEffects, CommentEffects, UserEffects]),
+    provideStore({ story: storyReducer, stories: storyReducer, comments: commentReducer, users: userReducer, menu: menuReducer }),
+    provideEffects([StoryEffects, CommentEffects, UserEffects, MenuEffects]),
     provideNzIcons(icons),
     provideNzI18n(en_GB),
     importProvidersFrom(FormsModule),

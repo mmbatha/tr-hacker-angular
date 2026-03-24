@@ -2,6 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { AgGridAngular, ICellRendererAngularComp } from "ag-grid-angular";
 import type { CellValueChangedEvent, ColDef, GridReadyEvent, ICellRendererParams, RowSelectionOptions, SelectionChangedEvent, ValueFormatterParams } from 'ag-grid-community';
+import { AppState, TabDetail } from '../../models/tab-detail';
+import { Store } from '@ngrx/store';
+import { selectCurrentTabs, selectIsLoadingBySerial } from '../../store/selectors/menu.selectors';
+import { MenuActions } from '../../store/actions/menu.actions';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 interface IRow {
   mission: string;
@@ -88,7 +94,7 @@ export class CompanyLogoRenderer implements ICellRendererAngularComp {
 
 @Component({
   selector: 'app-learn',
-  imports: [AgGridAngular],
+  imports: [AgGridAngular, CommonModule],
   templateUrl: './learn.component.html',
   styleUrl: './learn.component.less'
 })
@@ -108,31 +114,39 @@ export class LearnComponent {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
-    { field: "mission",
+    {
+      field: "mission",
       width: 150,
-     },
-    { field: "company",
+    },
+    {
+      field: "company",
       width: 130,
       cellRenderer: CompanyLogoRenderer
-     },
-    { field: "location",
+    },
+    {
+      field: "location",
       width: 225,
-     },
-    { field: "date",
+    },
+    {
+      field: "date",
       valueFormatter: this.dateFormatter
-     },
-    { field: "price",
+    },
+    {
+      field: "price",
       // Convert value from dollars to rands
-      valueFormatter: params => { 
+      valueFormatter: params => {
         const dollars = params.value as number;
-        const exchangeRate = 17.09;
+        // TODO: Get current rate using https://api.frankfurter.dev/v2/rates?base=USD&quotes=ZAR
+        const exchangeRate = 16.9722;
         params.value = dollars * exchangeRate;
-        return 'R ' + params.value.toLocaleString(); } // Format with inline function
-     },
-    { field: "successful",
+        return 'R ' + params.value.toLocaleString();
+      } // Format with inline function
+    },
+    {
+      field: "successful",
       width: 120,
       cellRenderer: MissionResultRenderer
-     },
+    },
     { field: "rocket" }
   ];
 
@@ -145,6 +159,8 @@ export class LearnComponent {
     editable: true,
     filter: true
   };
+  selectedSerial$: Observable<string | null>;
+  tabs$: Observable<TabDetail[]>;
 
   onSelectionChanged = (event: SelectionChangedEvent) => {
     console.log("Row selected!");
@@ -162,5 +178,17 @@ export class LearnComponent {
     console.log(`New Cell Value: ${event.value}`)
   };
 
-  constructor(private http:HttpClient){}
+  load(serial: string) {
+    this.store.dispatch(MenuActions.selectUnit({ serial }));
+    this.store.dispatch(MenuActions.loadTabs({ serial }));
+  }
+
+  isLoading$(serial: string) {
+    return this.store.select(selectIsLoadingBySerial(serial));
+  }
+
+  constructor(private http: HttpClient, private store: Store<AppState>) {
+    this.selectedSerial$ = this.store.select(state => state.menu.selectedSerial);
+    this.tabs$ = this.store.select(selectCurrentTabs);
+  }
 }
