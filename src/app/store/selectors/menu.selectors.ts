@@ -39,3 +39,13 @@ export const selectActiveTabViewModel = createSelector(
     };
   }
 );
+
+export const selectAllMenuItems = createSelector(
+  selectMenuState,
+  (state) => state.menuItems
+);
+
+export const selectIsLoading = createSelector(
+  selectMenuState,
+  (state) => state.loading
+);

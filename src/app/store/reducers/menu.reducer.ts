@@ -1,12 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
 import { MenuState } from '../../models/tab-detail';
-import { MenuActions } from '../actions/menu.actions';
+import { loadMenuFailure, loadMenuSuccess, MenuActions, selectRole } from '../actions/menu.actions';
 
 export const initialState: MenuState = {
   unitTabs: {},
   loadingSerials: [],
   selectedSerial: null,
-  activeTabId: null
+  activeTabId: null,
+  role: null,
+  menuItems: [],
+  loading: false,
+  error: null
 };
 
 export const menuReducer = createReducer(
@@ -20,5 +24,8 @@ export const menuReducer = createReducer(
     ...state,
     unitTabs: { ...state.unitTabs, [serial]: tabs },
     loadingSerials: state.loadingSerials.filter(id => id !== serial)
-  }))
+  })),
+  on(selectRole, (state, { role }) => ({ ...state, role, loading: true })),
+  on(loadMenuSuccess, (state, { menuItems }) => ({ ...state, menuItems, loading: false })),
+  on(loadMenuFailure, (state, { error }) => ({ ...state, error, loading: false }))
 );

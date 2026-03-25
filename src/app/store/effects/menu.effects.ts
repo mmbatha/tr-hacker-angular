@@ -1,12 +1,27 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of } from 'rxjs';
-import { MenuActions } from '../actions/menu.actions';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { loadMenuFailure, loadMenuSuccess, MenuActions, selectRole } from '../actions/menu.actions';
 import { MenuService } from '../../services/menu.services';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class MenuEffects {
   private actions$ = inject(Actions);
+  private http = inject(HttpClient);
+
+  loadMenu$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(selectRole),
+      switchMap(({ role }) => 
+        this.http.get<any[]>(`/api/config/${role}`).pipe(
+          map(menuItems => loadMenuSuccess({ menuItems })),
+          catchError(error => of(loadMenuFailure({ error: error.message })))
+        )
+      )
+    )
+  );
+  
   loadTabs$ = createEffect(() =>
     this.actions$.pipe(
       // 1. Listen specifically for the "Load Tabs" action

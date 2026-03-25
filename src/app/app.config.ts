@@ -1,9 +1,10 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { storyReducer } from "./store/reducers/story.reducer";
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import { icons } from './icons-provider';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
@@ -36,5 +37,9 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(en_GB),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideHttpClient()]
+    provideHttpClient(),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode()
+    })]
 };

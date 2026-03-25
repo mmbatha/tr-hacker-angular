@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createAction, createActionGroup, props } from '@ngrx/store';
 import { TabDetail } from '../../models/tab-detail';
 
 export const MenuActions = createActionGroup({
@@ -10,3 +10,18 @@ export const MenuActions = createActionGroup({
     'Select Unit': props<{ serial: string }>()
   }
 });
+
+export const selectRole = createAction(
+  '[Home] Select Role', 
+  props<{ role: 'Admin' | 'Faculty' | 'Student' }>()
+);
+
+export const loadMenuSuccess = createAction(
+  '[API] Load Menu Success', 
+  props<{ menuItems: any[] }>()
+);
+
+export const loadMenuFailure = createAction(
+  '[API] Load Menu Failure', 
+  props<{ error: string }>()
+);

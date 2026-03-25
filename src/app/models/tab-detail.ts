@@ -13,6 +13,10 @@ export interface MenuState {
   loadingSerials: string[];
   selectedSerial: string | null;
   activeTabId: string | null;
+  role: string | null;
+  menuItems: any[];
+  loading: boolean;
+  error: string | null;
 }
 
 export interface AppState {
