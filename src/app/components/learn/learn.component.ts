@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from '@angular/core';
 import { AgGridAngular, ICellRendererAngularComp } from "ag-grid-angular";
 import type { CellValueChangedEvent, ColDef, GridReadyEvent, ICellRendererParams, RowSelectionOptions, SelectionChangedEvent, ValueFormatterParams } from 'ag-grid-community';
 import { AppState, TabDetail } from '../../models/tab-detail';
@@ -8,6 +8,9 @@ import { selectCurrentTabs, selectIsLoadingBySerial } from '../../store/selector
 import { MenuActions } from '../../store/actions/menu.actions';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 interface IRow {
   mission: string;
@@ -94,11 +97,11 @@ export class CompanyLogoRenderer implements ICellRendererAngularComp {
 
 @Component({
   selector: 'app-learn',
-  imports: [AgGridAngular, CommonModule],
+  imports: [AgGridAngular, CommonModule, NzRadioModule, NzFormModule, ReactiveFormsModule],
   templateUrl: './learn.component.html',
   styleUrl: './learn.component.less'
 })
-export class LearnComponent {
+export class LearnComponent implements OnInit{
   // Return formatted date value
   dateFormatter(params: ValueFormatterParams) {
     return new Date(params.value).toLocaleDateString("en-za", {
@@ -162,6 +165,8 @@ export class LearnComponent {
   selectedSerial$: Observable<string | null>;
   tabs$: Observable<TabDetail[]>;
 
+  validateForm!: FormGroup;
+
   onSelectionChanged = (event: SelectionChangedEvent) => {
     console.log("Row selected!");
   };
@@ -187,8 +192,17 @@ export class LearnComponent {
     return this.store.select(selectIsLoadingBySerial(serial));
   }
 
-  constructor(private http: HttpClient, private store: Store<AppState>) {
+  submitForm(): void {
+    console.log('Selected Plan:', this.validateForm.value);
+  }
+
+  constructor(private http: HttpClient, private store: Store<AppState>, private fb: FormBuilder) {
     this.selectedSerial$ = this.store.select(state => state.menu.selectedSerial);
     this.tabs$ = this.store.select(selectCurrentTabs);
+  }
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      plan: [null, [Validators.required]]
+    });
   }
 }
