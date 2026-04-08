@@ -15,9 +15,9 @@
     @defer (on viewport) {
     <app-comment *ngFor="let kid of story.kids; let i = index" [commentId]="kid" [elementId]="'comment-' + i" />
     } @placeholder {
-      <p>Future comments</p>
+    <p>Future comments</p>
     } @loading {
-      <p>Loading comments...</p>
+    <p>Loading comments...</p>
     }
   </div>
 </div>
