@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:affected": "nx affected --target=test --base=origin/dev --coverage",
+    "merge-junit": "junit-merge --dir=./test-results --out=./test-results/complete-junit.xml",
+    "merge-cobertura": "node ./tools/merge-coverage.js"
   },
   "private": true,
   "dependencies": {

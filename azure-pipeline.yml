@@ -1,0 +1,33 @@
+steps:
+  - task: NodeTool@0
+    displayName: 'Use Node 20.x'
+    inputs:
+      versionSpec: 20.x
+  - task: Npm@1
+    inputs:
+      command: 'install'
+    displayName: Install npm
+  
+  - script: npx nx run-many --target=test --parallel=10 --ci=true --codeCoverage
+    displayName: Run Unit Tests
+
+  - script: npm run merge-junit
+    displayName: Summarizing affected test files
+    continueOnError: true
+
+  - script: npm run merge-cobertura
+    displayName: Summarizing affected coverage files
+    continueOnError: true
+
+  - task: PublishTestResults@2
+    displayName: Publishing Test Results to Pipeline
+    continueOnError: true
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test_results/complete-junit.xml'
+
+  - task: PublishCodeCoverageResults@2
+    displayName: Publishing Coverage Results to Pipeline
+    continueOnError: true
+    inputs:
+      summaryFileLocation: 'test_results/cobertura-coverage-complete.xml'
